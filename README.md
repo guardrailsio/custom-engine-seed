@@ -113,45 +113,67 @@ The following code snipped contains an example of the GuardRails output format a
 ```json
 {
     "engine": {
-        "name": "custom-engine-name", // should be the same as the name in the GR manifest file
-        "version": "1.0.0" // should be the same as the version in the GR manifest file
+        "name": "custom-engine-name",
+        "version": "1.0.0"
     },
-    "language": "general", // language that this engine runs against
-    "status": "success", // status of the engine scan
-    "executionTime": 17413,  // execution time
-    "findings": 1, // amount of issues that were identified  // Todo: this is currently called issues
-    "process": { // if you are orchestrating another tool, then:
-        "name": "engine-general-ossindex", // add the name of that tool here
-        "version": "1.0.0"  //  show the version number of that tool here
+    "language": "general",
+    "status": "success",
+    "executionTime": 17413,
+    "findings": 1,
+    "process": {
+        "name": "engine-general-ossindex",
+        "version": "1.0.0"
     },
-    "output": [ // Todo: should we change this to `result`?
+    "output": [
         {
-            "type": "sast", //  possible types are (sast|sca|secret|cloud)
-            "ruleId": "OSSINDEX001", // the unique ruleID of the custom engine, that can cause multiple findings
+            "type": "sast",
+            "ruleId": "OSSINDEX001",
             "location": {
-                "path": "benchmark/pom.xml", // relative path to the file that caused that finding
+                "path": "benchmark/pom.xml",
                 "positions": {
                     "begin": {
-                        "line": 594 // line within the file that caused that finding
+                        "line": 594
                     }
                 }
             },
-            "metadata": { // this block is mostly unstructured data that will be stored with the finding
-                "lineContent": "self.try(params[:graph])", // the only required data in the metadata object
-                "description": "User controlled method execution", // optional: add a description
-                "severity": "High", // optional: add a severity
-                "language": "javascript", // optional: especially for general language engines, you can override
-                // the language of a given issue, to point to the right documentation link.
-                "falsePositive": false // optional: when you add findings to the output, you can add some checks
-                // to determine whether this is likely a false positive or not. E.g. the file path is in a test folder
-                // or the lineContent contains a test string, etc. The findings with a false positive flag set to true
-                // will still be stored in our database, but not considered a vulnerability. Unless the flag is changed
-                // for a given finding in the dashboard.
+            "metadata": {
+                "lineContent": "self.try(params[:graph])",
+                "description": "User controlled method execution",
+                "severity": "High",
+                "language": "javascript",
+                "falsePositive": false
             }
         }
     ]
 };
 ```
+
+The `engine` object has two fields. The `name` and the `version`.
+
+- The `name` should be the same as the name in the GR manifest file.
+- The `version` should be the same as the version in the GR manifest file.
+
+The `language` defines the language that this engine runs against.
+
+The `status` defines the status of the engine scan, which can be either `successful`, `unsuccessful`, or `error`.
+
+The `executionTime` is the time that it took the engine to run against the repository in milliseconds.
+
+The `findings` reflects the amount of issues that were identified in the scan.
+
+The `process` object contains the name and version of another tool that is being run as part of the engine, or otherwise has the same values as the `engine` object.
+
+The `output` contains the array of findings of the engine.
+
+- The `type` of the finding with possible values of `sast`, `sca`,`secret`, or `cloud`.
+- The `ruleId` reflects the unique `ruleID` of the custom engine, which can occur multiple times.
+- The `location` object has information about the `path` and `line` that triggered the finding.
+- The `metadata` object contains some additional information relevant to the finding, which is mostly unstructured data that will be stored with the finding.
+  - The `lineContent`, which is the only required field in the metadata object, contains the line of code that triggered the finding.
+  - The `description` of the finding
+  - The `severity` of the finding.
+  - The programming `language` for which the finding applies, which, depending on the language can be used to override the value in the main scan result. This is useful to point to the right documentation link.
+  - The `falsePositive` flag can be used to indicate whether this issue is likely a false positive. E.g. the `path` is in a test folder, or the `lineContent` contains a test string, etc. The findings with a `falsePositive` flag set to true will still be stored in our database, but not considered a vulnerability. Unless the flag is changed for a given finding in the dashboard.
 
 ### The Test Source
 
