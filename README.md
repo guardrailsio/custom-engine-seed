@@ -40,8 +40,18 @@ The GuardRails manifest file has the following format:
       "gitlab": ["orgname-A", "orgname-B"]
     }
   },
-  "runForLanguages": ["general", "java"],
-  "timeoutInSeconds": 600
+  "runForLanguage": "general",
+  "timeoutInSeconds": 600,
+  "rules": {
+    "customEngineRuleID1": {
+      "grId": "GR0001",
+      "enable": true
+    },
+    "customEngineRuleID2": {
+      "grId": "GR0004",
+      "enable": false
+    }
+  }
 }
 ```
 
@@ -52,24 +62,6 @@ The `allowFor` object defines which organizations/groups are allowed to run the 
 The `runForLanguages` array defines which languages the engine can run against.
 Note: `general` would run this engine for every scan against every repository.
 The `timeoutInSeconds` defines a specific timeout for a scan of the engine. By default this value is 600 (10 minutes), and can be increased to a maximum of 1800 (30 minutes).
-
-### The Guardrails Mapping File
-
-The GuardRails mapping file has the following format:
-
-```json
-{
-  "customEngineRuleID1": {
-    "grID": "GR000X",
-    "enabled": true
-  },
-  "customEngineRuleID2": {
-    "grID": "GR000Y",
-    "enabled": false
-  }
-}
-```
-
 The `customEngineRuleID1` must uniquely identify a ruleID of the custom engine.
 To give an example, let's say you have improved upon the `gosec` tool and have some new rules that haven't been open-sourced.
 You would have to map all [existing rules of `gosec`](https://github.com/securego/gosec#available-rules) from `G101` until `G505`.
