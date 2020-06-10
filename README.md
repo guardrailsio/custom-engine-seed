@@ -13,7 +13,6 @@ The key directories and files are:
 |   └── run.sh          # runs the latest docker image
 ├── Dockerfile          # installs and executes the custom engine logic
 ├── guardrails.json     # GuardRails manifest file
-├── mappings.json       # GuardRails mappings file
 ├── README.md           # basic documentation and output reference
 ```
 
@@ -90,6 +89,8 @@ The latest mapping table can be found below:
 | GR0011 | Insecure Processing of Data            |
 | GR0012 | Insecure Network Communication         |
 | GR0013 | Using Vulnerable Libraries             |
+| GR0014 | Privacy Concerns                       |
+| GR0015 | Information Disclosure                 |
 
 ### The Custom Engine Logic
 
@@ -133,7 +134,6 @@ The following code snipped contains an example of the GuardRails output format a
                 "description": "User controlled method execution",
                 "severity": "High",
                 "language": "javascript",
-                "falsePositive": false
             }
         }
     ]
@@ -165,7 +165,6 @@ The `output` contains the array of findings of the engine.
   - The `description` of the finding
   - The `severity` of the finding.
   - The programming `language` for which the finding applies, which, depending on the language can be used to override the value in the main scan result. This is useful to point to the right documentation link.
-  - The `falsePositive` flag can be used to indicate whether this issue is likely a false positive. E.g. the `path` is in a test folder, or the `lineContent` contains a test string, etc. The findings with a `falsePositive` flag set to true will still be stored in our database, but not considered a vulnerability. Unless the flag is changed for a given finding in the dashboard.
 
 ### The Test Source
 

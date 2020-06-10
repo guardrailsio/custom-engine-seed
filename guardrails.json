@@ -1,5 +1,6 @@
 {
   "name": "custom-engine-name",
+  "version": "1.0.0",
   "private": true,
   "allowFor": {
     "providers": {
@@ -7,5 +8,16 @@
       "gitlab": ["orgname-A", "orgname-B"]
     }
   },
-  "runForLanguages": ["general", "java"]
+  "runForLanguage": "general",
+  "timeoutInSeconds": 600,
+  "rules": {
+    "customEngineRuleID1": {
+      "grId": "GR0001",
+      "enable": true
+    },
+    "customEngineRuleID2": {
+      "grId": "GR0004",
+      "enable": false
+    }
+  }
 }
