@@ -97,7 +97,7 @@ The latest mapping table can be found below:
 The main purpose of the custom engine is to run against repositories with the supported language for the security check.
 Regardless of what the custom engine logic does, it has to ensure that a [certain output](#the-guardrails-output-format) is generated.
 
-An example engine is provided at this [link](todo-link-to-the-new-custom-engine).
+An example engine is provided at this [link](https://github.com/guardrailsio/detect-sensitive-artifacts). Once on the GitHub page of this repository, the engine be downloaded directly as a ZIP file by clicking on "Clone or download" -> "Download ZIP".
 
 ### The GuardRails Output Format
 
