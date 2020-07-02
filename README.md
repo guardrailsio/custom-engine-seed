@@ -66,8 +66,8 @@ To give an example, let's say you have improved upon the `gosec` tool and have s
 You would have to map all [existing rules of `gosec`](https://github.com/securego/gosec#available-rules) from `G101` until `G505`.
 If you have created a custom rule `G606`, then the mapping file must contain that as well.
 
-For each ruleID of the custom engine, it has to define whether it is `enabled` or not.
-If it is not `enabled`, it is not going to be considered a `vulnerability` by GuardRails, rather a `finding` of a tool that is considered irrelevant. This makes it possible to customize the reporting of tools based on risk appetite, internal company requirements and ensure that the noise of tools is kept to a minimum.
+Each ruleID of the custom engine has to define whether it is enabled or not.
+If `enable` is not set to `true` then it is not going to be considered a `vulnerability` by GuardRails, rather a `finding` of a tool that is considered irrelevant. This makes it possible to customize the reporting of tools based on risk appetite, internal company requirements and ensure that the noise of tools is kept to a minimum.
 
 Finally, every ruleId of the custom engine has to be mapped to our internal GuardRails vulnerability ID.
 This is important to allow us to group different vulnerabilities across engines and run de-duplication of findings, amongst other useful things.
@@ -157,14 +157,16 @@ The `process` object contains the name and version of another tool that is being
 
 The `output` contains the array of findings of the engine.
 
-- The `type` of the finding with possible values of `sast`, `sca`,`secret`, or `cloud`.
+- The `type` of the finding with possible values of `sast`, `sca`,`secret`, or `cloud`. `SAST` should be used for vulnerabilities identified in code. `SCA` should be used for vulnerable dependencies. `Secret` should be used for any hard-coded secrets, or sensitive information. `Cloud` should be used for vulnerabilities in cloud configuration.
 - The `ruleId` reflects the unique `ruleID` of the custom engine, which can occur multiple times.
-- The `location` object has information about the `path` and `line` that triggered the finding.
+- The `location` object has information about the `path` and `line` that triggered the finding. This object used to support `end`, but it has been discontinued.
 - The `metadata` object contains some additional information relevant to the finding, which is mostly unstructured data that will be stored with the finding.
   - The `lineContent`, which is the only required field in the metadata object, contains the line of code that triggered the finding.
   - The `description` of the finding
   - The `severity` of the finding.
   - The programming `language` for which the finding applies, which, depending on the language can be used to override the value in the main scan result. This is useful to point to the right documentation link.
+
+Note: We don't currently support custom links to documentation, but this will be added soon.
 
 ### The Test Source
 
