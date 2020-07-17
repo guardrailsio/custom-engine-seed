@@ -168,6 +168,11 @@ The `output` contains the array of findings of the engine.
 
 Note: We don't currently support custom links to documentation, but this will be added soon.
 
+### Error Handling
+
+Make sure that the engine only returns a valid JSON output as described in the section above. No other output is supported at this stage.
+Error handling should be implemented to catch all exceptions and ensure that a valid JSON is returned in any case.
+
 ### The Test Source
 
 The test source is required to allow the engines to be fully self contained and testable.
