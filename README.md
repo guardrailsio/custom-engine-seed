@@ -6,7 +6,7 @@ This is a skeleton repository to speed up creation of custom engines.
 
 The key directories and files are:
 
-```bash
+```
 ├── test-src/           # place vulnerable code here
 ├── tools/
 |   ├── build.sh        # builds the latest docker image
@@ -18,7 +18,7 @@ The key directories and files are:
 
 ## How to use it
 
-- Use this repo as a template: https://github.com/guardrailsio/custom-engine-seed/generate
+Use this repo as a template: https://github.com/guardrailsio/custom-engine-seed/generate
 
 ## Custom Engine Requirements
 
@@ -137,7 +137,7 @@ The following code snipped contains an example of the GuardRails output format a
             }
         }
     ]
-};
+}
 ```
 
 The `engine` object has two fields. The `name` and the `version`.
